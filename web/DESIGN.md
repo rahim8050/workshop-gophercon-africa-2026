@@ -42,5 +42,5 @@ labels with wide tracking, tabular figures for numbers.
   `--map-marker-stroke`; corners use `--radius`. 16:9 on desktop, 4:5 on a phone. Popups link to
   a card only when that sighting is among the latest shown.
 - **Cards**: paper on the grey page, light shadow.
-- **Footer** (`#about`): what the data is and where it comes from (GBIF), with a licence note.
+- **Footer** (`#about`): what the data is and where it comes from (GBIF), with a licence note, centred.
 - **Logo**: `assets/images/logo.svg`, a gold leaf-shaped eye on an ink rounded square.

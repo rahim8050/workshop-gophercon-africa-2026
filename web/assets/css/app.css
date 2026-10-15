@@ -342,6 +342,7 @@ a {
 	max-width: var(--wrap);
 	margin: 0 auto;
 	padding: 48px var(--gutter);
+	text-align: center;
 }
 
 .site-footer h2 {
@@ -352,7 +353,7 @@ a {
 
 .site-footer p {
 	max-width: 70ch;
-	margin: 0 0 16px;
+	margin: 0 auto 16px;
 }
 
 .site-footer a {
