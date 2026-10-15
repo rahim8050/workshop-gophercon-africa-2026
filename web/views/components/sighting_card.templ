@@ -11,7 +11,7 @@ import (
 )
 
 templ SightingCard(s sighting.Sighting) {
-	<article class="card">
+	<article class="card" id={ Anchor(s) }>
 		<!-- Header -->
 		<header class="card__header">
 			<h2>{ displayName(s.Species) }</h2>

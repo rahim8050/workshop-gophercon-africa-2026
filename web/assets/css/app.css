@@ -13,6 +13,9 @@
 	--radius: 10px;
 	--wrap: 1200px;
 	--gutter: clamp(16px, 4vw, 32px);
+	--map-marker: #c8962e;
+	--map-marker-stroke: #14213d;
+	--map-radius: var(--radius);
 }
 
 * {
@@ -289,20 +292,44 @@ a {
 	margin: 0 auto;
 }
 
+.map-section,
 .records {
-	padding: 56px var(--gutter);
+	padding: 56px var(--gutter) 0;
 	scroll-margin-top: 72px;
 }
 
-.records__header h2 {
+.records {
+	padding-bottom: 56px;
+}
+
+.map-section .map {
+	box-shadow: 0 1px 2px rgba(20, 33, 61, 0.08);
+}
+
+.section-header {
+	margin-bottom: 24px;
+}
+
+.section-header h2 {
 	margin: 0 0 4px;
 	font-size: 28px;
 	letter-spacing: -0.02em;
 }
 
-.records__header p {
+.section-header p {
+	max-width: 70ch;
 	margin: 0;
 	color: var(--muted);
+}
+
+.card {
+	scroll-margin-top: 88px;
+}
+
+@media (max-width: 640px) {
+	.map-section .map {
+		aspect-ratio: 4 / 5;
+	}
 }
 
 .site-footer {

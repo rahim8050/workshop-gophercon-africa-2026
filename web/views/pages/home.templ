@@ -6,7 +6,7 @@ import (
 	"workshop/web/views/layout"
 )
 
-templ Home(sightings []sighting.Sighting, summary sighting.Summary) {
+templ Home(sightings []sighting.Sighting, summary sighting.Summary, points []components.MapPoint) {
 	@layout.Base(layout.BaseProps{
 		Title:       "Sightings Observatory · Open wildlife records",
 		Description: "An open record of wildlife sightings from around the world, gathered from GBIF for conservation and research.",
@@ -51,8 +51,21 @@ templ Home(sightings []sighting.Sighting, summary sighting.Summary) {
 				}
 			</div>
 		</section>
+		if len(points) > 0 {
+			<section id="map" class="map-section" aria-labelledby="map-title">
+				<header class="section-header">
+					<h2 id="map-title">Where wildlife is being seen</h2>
+					<p>{ number(len(points)) } sightings with a recorded position. Numbered circles group nearby records; zoom in or click one to open it.</p>
+				</header>
+				@components.Map(components.MapProps{
+					Points:  points,
+					Cluster: true,
+					Label:   "Map of where each sighting was recorded. The same records are listed below.",
+				})
+			</section>
+		}
 		<section id="sightings" class="records" aria-labelledby="records-title">
-			<header class="records__header">
+			<header class="section-header">
 				<h2 id="records-title">Latest records</h2>
 				if len(sightings) > 0 {
 					<p>The { number(len(sightings)) } most recent of { number(summary.Sightings) } sightings, newest first.</p>
