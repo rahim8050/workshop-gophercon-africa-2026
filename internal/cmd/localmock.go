@@ -13,7 +13,7 @@ import (
 
 // localMockAddr is the address the local mock API server (cmd/mockapi)
 // listens on, matching localGBIFBaseURL/localOpenMeteoBaseURL.
-const localMockAddr = "localhost:8082"
+const localMockAddr = "localhost:8092"
 
 // localGBIFBaseURL and localOpenMeteoBaseURL point at the mock API server,
 // which the app uses unless --live says otherwise: a room full of ingests

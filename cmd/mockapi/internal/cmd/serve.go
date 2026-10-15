@@ -25,7 +25,7 @@ func serveCmd(app *app) *cli.Command {
 				Name:    "port",
 				Aliases: []string{"p"},
 				Usage:   "port to listen on",
-				Value:   8082,
+				Value:   8092,
 			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {

@@ -15,8 +15,8 @@ WORKDIR /app
 COPY --from=build /out/workshop /app/workshop
 COPY --from=build /src/workshop.db /app/workshop.db
 
-ENV PORT=8080 \
+ENV PORT=8060 \
 	DB_URI=file:/app/workshop.db
 
-EXPOSE 8080
+EXPOSE 8060
 ENTRYPOINT ["/app/workshop", "web"]

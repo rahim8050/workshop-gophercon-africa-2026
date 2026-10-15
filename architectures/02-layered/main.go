@@ -31,6 +31,6 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /", handlers.Homepage(memStore))
 
-	slog.InfoContext(ctx, "Listening on :8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	slog.InfoContext(ctx, "Listening on :8060")
+	log.Fatal(http.ListenAndServe(":8060", mux))
 }

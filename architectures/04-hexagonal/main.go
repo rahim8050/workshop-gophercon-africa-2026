@@ -34,6 +34,6 @@ func main() {
 	mux := http.NewServeMux()
 	sightinghttp.New(sightingSvc, speciesSvc).Routes(mux)
 
-	slog.InfoContext(ctx, "Listening on :8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	slog.InfoContext(ctx, "Listening on :8060")
+	log.Fatal(http.ListenAndServe(":8060", mux))
 }

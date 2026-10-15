@@ -108,7 +108,7 @@ session.
    within about ten minutes, then work in small rounds of their choosing. Don't ask a second
    round of questions before they've seen the first result.
 8. If they aren't running it yet, suggest `make web` in another terminal, with
-   http://localhost:8080 open. It doesn't reload by itself: see "See the site" below.
+   http://localhost:8060 open. It doesn't reload by itself: see "See the site" below.
 
 ## Design data
 
@@ -243,12 +243,12 @@ make them look like the rest of their site.
 
 ## See the site
 
-Their `make web` on http://localhost:8080 is the preview. It serves the build from when it
+Their `make web` on http://localhost:8060 is the preview. It serves the build from when it
 started, stylesheet included, since the assets are embedded. Don't start a server of your own,
 and don't stop theirs.
 
 - When a round of edits builds, tell them to restart it (Ctrl+C, then `make web`) and refresh.
-- Once they have, `curl -s http://localhost:8080/<page>` shows what a page rendered.
+- Once they have, `curl -s http://localhost:8060/<page>` shows what a page rendered.
 - If they're running `make web-hot`, suggest `make web` for this session instead. templier
   rebuilds while you're still editing, so it can end up serving a stale build.
 - Unless you have a browser tool, you can't see the site. After a big visible change, ask them

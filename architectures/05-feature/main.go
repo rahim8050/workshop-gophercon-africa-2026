@@ -33,6 +33,6 @@ func main() {
 
 	router := web.New(sightingSvc)
 
-	slog.InfoContext(ctx, "Listening on :8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	slog.InfoContext(ctx, "Listening on :8060")
+	log.Fatal(http.ListenAndServe(":8060", router))
 }

@@ -13,7 +13,7 @@ import (
 type Config struct {
 	Env         Environment `env:"APP_ENV" envDefault:"development"`
 	DatabaseURL string      `env:"DB_URI" envDefault:"file:workshop.db"`
-	Port        int         `env:"PORT" envDefault:"8080"`
+	Port        int         `env:"PORT" envDefault:"8060"`
 }
 
 // Environment names where the app is running.

@@ -25,7 +25,7 @@ key: # Save the workshop's Anthropic key for Claude Code, then run `claude` here
 	go run ./tools/key
 .PHONY: key
 
-mock: # Serve the mock GBIF and Open-Meteo APIs on :8082.
+mock: # Serve the mock GBIF and Open-Meteo APIs on :8092.
 	go run ./cmd/mockapi
 .PHONY: mock
 
@@ -51,7 +51,7 @@ test-race: # Run all tests with race
 .PHONY: test-race
 
 load: # Load test the home page for 10 seconds while make web runs
-	go tool hey -z 10s -c 10 http://localhost:8080/
+	go tool hey -z 10s -c 10 http://localhost:8060/
 .PHONY: load
 
 # -j2 runs the CPU profile and the load at the same time.
@@ -103,7 +103,7 @@ vendor: # Re-vendor after go get, here and in tools/gopls.
 .PHONY: vendor
 
 kill-ports: # Kill anything listening on the ports this app uses (macOS/Linux).
-	@for port in 8080 8081 8082 8083; do \
+	@for port in 6060 8060 8081 8082 8083 8092; do \
 		pid=$$(lsof -ti tcp:$$port); \
 		if [ -n "$$pid" ]; then \
 			echo "Killing $$pid on :$$port"; \

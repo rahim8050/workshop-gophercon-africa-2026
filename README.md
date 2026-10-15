@@ -102,7 +102,7 @@ Each of `internal/{domain,clients,infra,common}` has a README saying where its l
    ```sh
    make setup
    ```
-4. **Seed the database and start the site**, then open http://localhost:8080:
+4. **Seed the database and start the site**, then open http://localhost:8060:
 
    ```sh
    go run . db seed
@@ -114,7 +114,7 @@ Each of `internal/{domain,clients,infra,common}` has a README saying where its l
 ```sh
 make run        # the interactive CLI: migrate, seed, ingest sightings, list, stats, web
 make run-live   # the same, against the real GBIF and Open-Meteo instead of the mock
-make web        # serve the site on :8080
+make web        # serve the site on :8060
 make web-hot    # the same, with templ hot reload
 make templ      # regenerate templ after editing a .templ file
 make sqlc       # regenerate sqlc after editing a query or migration

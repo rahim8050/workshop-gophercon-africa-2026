@@ -17,40 +17,44 @@ img {
 }
 
 .sightings {
-	display: grid;
-	gap: 40px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 32px;
 	padding: 0;
 	list-style: none;
 }
 
-.card {
-	display: grid;
-	grid-template-columns: 320px 1fr;
-	grid-template-rows: auto 1fr;
-	gap: 0 24px;
+.sightings > li {
+	display: flex;
+	flex: 0 0 calc((100% - 2 * 32px) / 3);
+	min-width: 0;
 }
 
-.card__gallery {
-	grid-column: 1;
-	grid-row: 1 / span 2;
-}
-
-.card__header,
-.card__meta {
-	grid-column: 2;
+@media (max-width: 960px) {
+	.sightings > li {
+		flex-basis: calc((100% - 32px) / 2);
+	}
 }
 
 @media (max-width: 640px) {
-	.card {
-		grid-template-columns: 1fr;
+	.sightings > li {
+		flex-basis: 100%;
 	}
+}
 
-	.card__gallery,
-	.card__header,
-	.card__meta {
-		grid-column: 1;
-		grid-row: auto;
-	}
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+}
+
+.card__gallery {
+	order: -1;
+}
+
+.card__gallery .gallery__item:not(:first-child) {
+	display: none;
 }
 
 .card h2,

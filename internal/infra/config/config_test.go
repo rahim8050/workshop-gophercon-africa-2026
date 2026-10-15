@@ -31,7 +31,7 @@ func TestLoad(t *testing.T) {
 
 		got, err := config.Load()
 		require.NoError(t, err)
-		assert.Equal(t, config.Config{DatabaseURL: "file:workshop.db", Port: 8080, Env: config.Development}, got)
+		assert.Equal(t, config.Config{DatabaseURL: "file:workshop.db", Port: 8060, Env: config.Development}, got)
 	})
 
 	t.Run("From file", func(t *testing.T) {

@@ -1,6 +1,6 @@
 # Run with make web-hot, or: CLICOLOR_FORCE=1 go tool templier --config ./templier.yml
-# Open http://localhost:8080 for live reload.
-templier-host: "localhost:8080"
+# Open http://localhost:8060 for live reload.
+templier-host: "localhost:8060"
 proxy-timeout: 10s
 tls: null
 
@@ -24,7 +24,7 @@ app:
   # Keep the default workshop.db relative to starter/.
   dir-work: ./
   host: http://localhost:8081
-  flags: web --port 8081 --live-reload-url http://localhost:8080
+  flags: web --port 8081 --live-reload-url http://localhost:8060
   exclude:
     - ".*"
     - "*~"

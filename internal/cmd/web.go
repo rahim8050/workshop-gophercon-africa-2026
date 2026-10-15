@@ -19,7 +19,7 @@ func webCmd(app *app) *cli.Command {
 		Name:      "web",
 		Aliases:   []string{"w"},
 		Usage:     "Serve the sightings web interface",
-		UsageText: "workshop web [-p 8080]",
+		UsageText: "workshop web [-p 8060]",
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:    "port",

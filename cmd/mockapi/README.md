@@ -8,8 +8,8 @@ The app's CLI starts it in the background the first time a command needs it (`si
 `db seed`), so there's nothing to run by hand. To serve it yourself:
 
 ```bash
-make mock                    # from the starter (or an attendee folder), listens on :8082
-go run ./cmd/mockapi         # the same, or add serve --port 8082 to pick the port
+make mock                    # from the starter (or an attendee folder), listens on :8092
+go run ./cmd/mockapi         # the same, or add serve --port 8092 to pick the port
 ```
 
 To use the real APIs, pass `--live`: `make run-live`, or `workshop --live sightings ingest -n 20`.
