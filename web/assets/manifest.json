@@ -1,0 +1,8 @@
+{
+	"name": "Sightings Observatory",
+	"short_name": "Sightings",
+	"icons": [{ "src": "/assets/images/logo.svg", "sizes": "any", "type": "image/svg+xml" }],
+	"theme_color": "#14213D",
+	"background_color": "#ECECEE",
+	"display": "standalone"
+}

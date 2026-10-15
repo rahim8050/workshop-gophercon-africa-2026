@@ -6,22 +6,69 @@ import (
 	"workshop/web/views/layout"
 )
 
-templ Home(sightings []sighting.Sighting) {
+templ Home(sightings []sighting.Sighting, summary sighting.Summary) {
 	@layout.Base(layout.BaseProps{
-		Title: "Sightings",
+		Title:       "Sightings Observatory · Open wildlife records",
+		Description: "An open record of wildlife sightings from around the world, gathered from GBIF for conservation and research.",
 	}) {
-		<h1>Sightings</h1>
-		if len(sightings) == 0 {
-			<p>No sightings have been ingested yet.</p>
-		} else {
-			<p>Total: { len(sightings) }</p>
-			<ul class="sightings">
-				for _, s := range sightings {
-					<li>
-						@components.SightingCard(s)
-					</li>
+		<section class="hero" aria-labelledby="hero-title">
+			<div class="hero__inner">
+				<p class="hero__eyebrow">Open biodiversity data · Sourced from GBIF</p>
+				<h1 id="hero-title">Every sighting is a data point for conservation.</h1>
+				<p class="hero__lede">
+					{ heroLede(summary) }
+				</p>
+				<div class="hero__actions">
+					<a class="button button--gold" href="#sightings">Explore the records</a>
+					<a class="button button--ghost" href="#about">How the data is gathered</a>
+				</div>
+			</div>
+			<div id="coverage" class="stats" aria-label="Coverage">
+				<dl class="stats__inner">
+					<div class="stat">
+						<dt>Sightings</dt>
+						<dd>{ number(summary.Sightings) }</dd>
+					</div>
+					<div class="stat">
+						<dt>Species</dt>
+						<dd>{ number(summary.Species) }</dd>
+					</div>
+					<div class="stat">
+						<dt>Countries</dt>
+						<dd>{ number(summary.Countries) }</dd>
+					</div>
+					<div class="stat">
+						<dt>Observers</dt>
+						<dd>{ number(summary.Recorders) }</dd>
+					</div>
+					<div class="stat">
+						<dt>Years covered</dt>
+						<dd>{ yearSpan(summary) }</dd>
+					</div>
+				</dl>
+				if !summary.Latest.IsZero() {
+					<p class="stats__updated">Latest record { summary.Latest.Format("2 January 2006") }</p>
 				}
-			</ul>
-		}
+			</div>
+		</section>
+		<section id="sightings" class="records" aria-labelledby="records-title">
+			<header class="records__header">
+				<h2 id="records-title">Latest records</h2>
+				if len(sightings) > 0 {
+					<p>The { number(len(sightings)) } most recent of { number(summary.Sightings) } sightings, newest first.</p>
+				}
+			</header>
+			if len(sightings) == 0 {
+				<p class="records__empty">No sightings have been ingested yet.</p>
+			} else {
+				<ul class="sightings">
+					for _, s := range sightings {
+						<li>
+							@components.SightingCard(s)
+						</li>
+					}
+				</ul>
+			}
+		</section>
 	}
 }
