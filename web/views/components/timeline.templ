@@ -1,0 +1,24 @@
+package components
+
+import (
+	"strconv"
+
+	"workshop/internal/domain/sighting"
+)
+
+templ Timeline(byYear map[int]int, sum sighting.Summary) {
+	if sum.Sightings > 0 {
+		<figure class="timeline">
+			<ol class="timeline__bars" role="img" aria-label={ timelineLabel(byYear, sum) }>
+				for _, y := range years(sum) {
+					<li class={ "timeline__bar", templ.KV("timeline__bar--empty", byYear[y] == 0) } style={ bar(byYear[y], busiest(byYear)) } title={ yearTitle(y, byYear[y]) }></li>
+				}
+			</ol>
+			<figcaption class="timeline__axis">
+				<span>{ strconv.Itoa(sum.Earliest.Year()) }</span>
+				<span class="timeline__caption">{ timelineCaption(byYear) }</span>
+				<span>{ strconv.Itoa(sum.Latest.Year()) }</span>
+			</figcaption>
+		</figure>
+	}
+}

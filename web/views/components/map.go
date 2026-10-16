@@ -2,7 +2,7 @@ package components
 
 import "workshop/internal/domain/sighting"
 
-// MapPoint is one marker, handed to map.js as JSON.
+// MapPoint is one marker, handed to map.js and the globe as JSON.
 type MapPoint struct {
 	Lat    float64 `json:"lat"`
 	Lng    float64 `json:"lng"`
@@ -10,28 +10,29 @@ type MapPoint struct {
 	Date   string  `json:"date"`
 	Place  string  `json:"place"`
 	Count  string  `json:"count,omitzero"`
-	Anchor string  `json:"anchor,omitzero"`
+	Anchor string  `json:"anchor"`
+	Group  string  `json:"group"`
+	Recent bool    `json:"recent,omitzero"`
 }
 
-// MapPoints turns sightings into markers, linking only the first linked ones to their cards.
-func MapPoints(sightings []sighting.Sighting, linked int) []MapPoint {
+// MapPoints turns sightings, newest first, into markers, flagging the first recent ones and leaving out any with no position.
+func MapPoints(sightings []sighting.Sighting, recent int) []MapPoint {
 	points := make([]MapPoint, 0, len(sightings))
 	for i, s := range sightings {
 		if s.Location.Latitude == 0 && s.Location.Longitude == 0 {
 			continue
 		}
-		p := MapPoint{
-			Lat:   s.Location.Latitude,
-			Lng:   s.Location.Longitude,
-			Title: displayName(s.Species),
-			Date:  s.HappenedAt.Format("2 Jan 2006"),
-			Place: place(s.Location),
-			Count: count(s.IndividualCount),
-		}
-		if i < linked {
-			p.Anchor = Anchor(s)
-		}
-		points = append(points, p)
+		points = append(points, MapPoint{
+			Lat:    s.Location.Latitude,
+			Lng:    s.Location.Longitude,
+			Title:  displayName(s.Species),
+			Date:   s.HappenedAt.Format("2 Jan 2006"),
+			Place:  place(s.Location),
+			Count:  count(s.IndividualCount),
+			Anchor: Anchor(s),
+			Group:  AnimalGroup(s.Species).Key,
+			Recent: i < recent,
+		})
 	}
 	return points
 }

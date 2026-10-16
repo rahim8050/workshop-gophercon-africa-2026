@@ -2,7 +2,7 @@
 // pauses off screen, reduced motion and a fallback. It draws nothing itself.
 // A scene calls mount(name, setup) and builds what it likes in setup.
 
-import * as THREE from 'three';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js';
 
 export { THREE };
 

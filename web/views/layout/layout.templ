@@ -1,5 +1,7 @@
 package layout
 
+import "workshop/web/views/components"
+
 type BaseProps struct {
 	Title       string
 	Description string
@@ -26,8 +28,13 @@ templ Base(props BaseProps) {
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" integrity="sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+" crossorigin="anonymous"/>
 			<link rel="stylesheet" href="/assets/css/map.css"/>
 			<link rel="stylesheet" href="/assets/css/app.css"/>
+			<link rel="stylesheet" href="/assets/css/weather.css"/>
+			<link rel="stylesheet" href="/assets/css/filter.css"/>
+			<link rel="stylesheet" href="/assets/css/lightbox.css"/>
+			<link rel="stylesheet" href="/assets/css/threejs.css"/>
 		</head>
 		<body>
+			@components.WeatherIcons()
 			<a class="skip-link" href="#main">Skip to content</a>
 			<header class="site-header">
 				<div class="site-header__inner">
@@ -66,9 +73,12 @@ templ Base(props BaseProps) {
 					<p class="site-footer__credit">Photos and records remain the work of their observers and are shown under the licence each was published with.</p>
 				</div>
 			</footer>
+			@components.Lightbox()
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 			<script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous" defer></script>
 			<script src="/assets/js/map.js" defer></script>
+			<script src="/assets/js/filter.js" defer></script>
+			<script src="/assets/js/lightbox.js" defer></script>
 			<script src="/assets/js/app.js"></script>
 		</body>
 	</html>

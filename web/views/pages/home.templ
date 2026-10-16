@@ -1,22 +1,46 @@
 package pages
 
 import (
+	"time"
+
 	"workshop/internal/domain/sighting"
 	"workshop/web/views/components"
 	"workshop/web/views/layout"
 )
 
-templ Home(sightings []sighting.Sighting, summary sighting.Summary, points []components.MapPoint) {
+type HomeProps struct {
+	Sightings []sighting.Sighting
+	Summary   sighting.Summary
+	Points    []components.MapPoint
+	Rare      map[int]bool
+	ByYear    map[int]int
+	// Spot is the species of the day; Show says whether there is one.
+	Spot SpotlightProps
+}
+
+type SpotlightProps struct {
+	Sighting sighting.Sighting
+	Photo    sighting.Media
+	OnRecord int
+	Day      time.Time
+	Show     bool
+}
+
+templ Home(props HomeProps) {
 	@layout.Base(layout.BaseProps{
 		Title:       "Sightings Observatory · Open wildlife records",
 		Description: "An open record of wildlife sightings from around the world, gathered from GBIF for conservation and research.",
 	}) {
 		<section class="hero" aria-labelledby="hero-title">
+			@components.ThreeScene(components.ThreeSceneProps{
+				Scene:    "globe",
+				Backdrop: true,
+			})
 			<div class="hero__inner">
 				<p class="hero__eyebrow">Open biodiversity data · Sourced from GBIF</p>
 				<h1 id="hero-title">Every sighting is a data point for conservation.</h1>
 				<p class="hero__lede">
-					{ heroLede(summary) }
+					{ heroLede(props.Summary) }
 				</p>
 				<div class="hero__actions">
 					<a class="button button--gold" href="#sightings">Explore the records</a>
@@ -27,38 +51,42 @@ templ Home(sightings []sighting.Sighting, summary sighting.Summary, points []com
 				<dl class="stats__inner">
 					<div class="stat">
 						<dt>Sightings</dt>
-						<dd>{ number(summary.Sightings) }</dd>
+						<dd>{ number(props.Summary.Sightings) }</dd>
 					</div>
 					<div class="stat">
 						<dt>Species</dt>
-						<dd>{ number(summary.Species) }</dd>
+						<dd>{ number(props.Summary.Species) }</dd>
 					</div>
 					<div class="stat">
 						<dt>Countries</dt>
-						<dd>{ number(summary.Countries) }</dd>
+						<dd>{ number(props.Summary.Countries) }</dd>
 					</div>
 					<div class="stat">
 						<dt>Observers</dt>
-						<dd>{ number(summary.Recorders) }</dd>
+						<dd>{ number(props.Summary.Recorders) }</dd>
 					</div>
 					<div class="stat">
 						<dt>Years covered</dt>
-						<dd>{ yearSpan(summary) }</dd>
+						<dd>{ yearSpan(props.Summary) }</dd>
 					</div>
 				</dl>
-				if !summary.Latest.IsZero() {
-					<p class="stats__updated">Latest record { summary.Latest.Format("2 January 2006") }</p>
+				@components.Timeline(props.ByYear, props.Summary)
+				if !props.Summary.Latest.IsZero() {
+					<p class="stats__updated">Latest record { props.Summary.Latest.Format("2 January 2006") }</p>
 				}
 			</div>
 		</section>
-		if len(points) > 0 {
+		if props.Spot.Show {
+			@components.Spotlight(props.Spot.Sighting, props.Spot.Photo, props.Spot.OnRecord, props.Spot.Day)
+		}
+		if len(props.Points) > 0 {
 			<section id="map" class="map-section" aria-labelledby="map-title">
 				<header class="section-header">
 					<h2 id="map-title">Where wildlife is being seen</h2>
-					<p>{ number(len(points)) } sightings with a recorded position. Numbered circles group nearby records; zoom in or click one to open it.</p>
+					<p>{ number(len(props.Points)) } sightings with a recorded position. Numbered circles group nearby records; zoom in or click one to open it.</p>
 				</header>
 				@components.Map(components.MapProps{
-					Points:  points,
+					Points:  props.Points,
 					Cluster: true,
 					Label:   "Map of where each sighting was recorded. The same records are listed below.",
 				})
@@ -67,20 +95,31 @@ templ Home(sightings []sighting.Sighting, summary sighting.Summary, points []com
 		<section id="sightings" class="records" aria-labelledby="records-title">
 			<header class="section-header">
 				<h2 id="records-title">Latest records</h2>
-				if len(sightings) > 0 {
-					<p>The { number(len(sightings)) } most recent of { number(summary.Sightings) } sightings, newest first.</p>
+				if len(props.Sightings) > 0 {
+					<p>The { number(len(props.Sightings)) } most recent of { number(props.Summary.Sightings) } sightings, newest first.</p>
 				}
 			</header>
-			if len(sightings) == 0 {
+			if len(props.Sightings) == 0 {
 				<p class="records__empty">No sightings have been ingested yet.</p>
 			} else {
-				<ul class="sightings">
-					for _, s := range sightings {
-						<li>
-							@components.SightingCard(s)
+				@components.Filter(components.FilterProps{
+					Target: "sightings-list",
+					Search: true,
+					Groups: []components.FilterGroup{
+						components.FilterGroup{Key: "kind", Label: "Kind", Options: components.FilterOptions(props.Sightings, 0, components.Kind)},
+						components.FilterGroup{Key: "animal", Label: "Animal", Options: components.FilterOptions(props.Sightings, 12, components.Animal)},
+						components.FilterGroup{Key: "country", Label: "Country", Options: components.FilterOptions(props.Sightings, 12, components.Country)},
+						components.FilterGroup{Key: "year", Label: "Year", Options: components.Years(props.Sightings)},
+					},
+				})
+				<ul id="sightings-list" class="sightings">
+					for _, s := range props.Sightings {
+						<li { components.FilterAttrs(s)... }>
+							@components.SightingCard(s, props.Rare[s.Species.GBIFKey])
 						</li>
 					}
 				</ul>
+				<p id="sightings-list-empty" class="records__empty" hidden>No sightings match those filters.</p>
 			}
 		</section>
 	}

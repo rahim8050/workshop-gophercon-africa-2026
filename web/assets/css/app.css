@@ -16,6 +16,8 @@
 	--map-marker: #c8962e;
 	--map-marker-stroke: #14213d;
 	--map-radius: var(--radius);
+	--three-accent: #c8962e;
+	--three-line: #fafaf7;
 }
 
 * {
@@ -448,4 +450,214 @@ img {
 
 .gallery__credit {
 	font-size: 12px;
+}
+
+.gallery__empty,
+.records__empty {
+	margin: 0;
+	color: var(--muted);
+	font-style: italic;
+}
+
+/* The hero is the globe scene's containing block; the copy rides above it. */
+.hero {
+	position: relative;
+	overflow: hidden;
+}
+
+.hero__inner,
+.stats {
+	position: relative;
+	z-index: 1;
+}
+
+.hero .three-scene--backdrop.is-live {
+	opacity: 0.5;
+}
+
+@media (max-width: 760px) {
+	.hero .three-scene--backdrop.is-live {
+		opacity: 0.3;
+	}
+}
+
+/* Sightings per year, along the bottom of the coverage strip. */
+.timeline {
+	max-width: var(--wrap);
+	margin: 0 auto;
+	padding: 4px var(--gutter) 16px;
+}
+
+.timeline__bars {
+	display: flex;
+	align-items: flex-end;
+	gap: 3px;
+	height: 56px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.timeline__bar {
+	display: flex;
+	align-items: flex-end;
+	flex: 1 1 0;
+	height: 100%;
+	min-width: 2px;
+}
+
+.timeline__bar::before {
+	content: "";
+	display: block;
+	width: 100%;
+	height: max(var(--bar, 0%), 2px);
+	border-radius: 2px 2px 0 0;
+	background: var(--gold);
+}
+
+.timeline__bar--empty::before {
+	background: var(--ink-line);
+}
+
+.timeline__axis {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 8px;
+	color: var(--on-ink-muted);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+}
+
+.timeline__caption {
+	text-align: center;
+}
+
+/* Species of the day: the photo beside a short note. */
+.spotlight {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+	gap: clamp(20px, 4vw, 40px);
+	align-items: center;
+	margin: 56px var(--gutter) 0;
+	padding: clamp(20px, 3vw, 28px);
+	border-radius: var(--radius);
+	background: var(--paper);
+	box-shadow: 0 1px 2px rgba(20, 33, 61, 0.08);
+	scroll-margin-top: 88px;
+}
+
+@media (max-width: 760px) {
+	.spotlight {
+		grid-template-columns: 1fr;
+	}
+}
+
+.spotlight__photo img {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	border-radius: calc(var(--radius) - 2px);
+}
+
+.spotlight__eyebrow {
+	margin: 0 0 8px;
+	color: var(--gold);
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.spotlight h2 {
+	margin: 0;
+	font-size: clamp(24px, 3vw, 32px);
+	letter-spacing: -0.02em;
+}
+
+.spotlight__text {
+	margin: 12px 0;
+	color: var(--muted);
+}
+
+.spotlight__credit {
+	margin: 0 0 16px;
+	font-size: 13px;
+	color: var(--muted);
+}
+
+/* The specimen label: a museum card's catalogue line and header. */
+.specimen__label {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.specimen__ref {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0;
+	color: var(--muted);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.card__header h3 {
+	margin: 0;
+	font-size: 20px;
+	letter-spacing: -0.01em;
+}
+
+.card__scientific {
+	margin: 2px 0 0;
+	color: var(--muted);
+	font-size: 14px;
+	font-style: italic;
+}
+
+.badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.badge {
+	display: inline-block;
+	padding: 2px 10px;
+	border: 1px solid currentColor;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+
+.badge--rare {
+	background: var(--gold);
+	border-color: var(--gold);
+	color: var(--ink);
+}
+
+/* Each group gets one hue, mixed into a tinted pill. */
+.badge--group {
+	background: color-mix(in srgb, var(--group, var(--muted)) 12%, transparent);
+	color: var(--group, var(--muted));
+}
+
+.group--land { --group: #4d7c2f; }
+.group--sea { --group: #1d6fa5; }
+.group--bird { --group: #7a4fa3; }
+.group--reptile { --group: #8a6d1f; }
+.group--shark { --group: #3f6f6b; }
+.group--other { --group: #52525b; }
+
+/* Chips take the site's ink rather than the block's defaults. */
+.records .filter {
+	--chip-active-bg: var(--ink);
+	--chip-active-fg: var(--on-ink);
 }

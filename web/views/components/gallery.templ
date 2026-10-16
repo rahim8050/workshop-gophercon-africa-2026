@@ -7,14 +7,15 @@ import (
 
 templ Gallery(items []sighting.Media) {
 	if len(items) == 0 {
-		<p class="gallery__empty">No media recorded.</p>
+		<p class="gallery__empty">No photo recorded</p>
 	} else {
 		<ul class="gallery">
 			for _, m := range items {
-				<!-- Items -->
 				<li class="gallery__item">
 					if m.Type == "StillImage" {
-						<img src={ m.URL } alt={ altText(m) } loading="lazy"/>
+						<a href={ templ.URL(m.URL) } data-lightbox data-caption={ credit(m) }>
+							<img src={ m.URL } alt={ altText(m) } loading="lazy"/>
+						</a>
 					} else {
 						<a href={ templ.URL(m.URL) } rel="noopener">{ altText(m) }</a>
 					}
@@ -29,4 +30,12 @@ templ Gallery(items []sighting.Media) {
 
 func altText(m sighting.Media) string {
 	return cmp.Or(m.Title, m.Description, "Sighting media")
+}
+
+// credit names who took a photo, for the lightbox caption.
+func credit(m sighting.Media) string {
+	if m.Creator == "" {
+		return ""
+	}
+	return "Photo: " + m.Creator
 }

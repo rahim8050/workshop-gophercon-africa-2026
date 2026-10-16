@@ -1,0 +1,32 @@
+package components
+
+import (
+	"workshop/internal/domain/sighting"
+	"time"
+)
+
+templ Spotlight(s sighting.Sighting, photo sighting.Media, onRecord int, day time.Time) {
+	<section id="spotlight" class="spotlight" aria-labelledby="spotlight-title">
+		<a class="spotlight__photo" href={ templ.URL(photo.URL) } data-lightbox data-caption={ credit(photo) }>
+			<img src={ photo.URL } alt={ altText(photo) } loading="lazy"/>
+		</a>
+		<div class="spotlight__body">
+			<p class="spotlight__eyebrow">Species of the day · { day.Format("2 January") }</p>
+			<h2 id="spotlight-title">{ displayName(s.Species) }</h2>
+			if s.Species.ScientificName != "" {
+				<p class="card__scientific">{ s.Species.ScientificName }</p>
+			}
+			<ul class="badges">
+				@GroupBadge(AnimalGroup(s.Species))
+			</ul>
+			<p class="spotlight__text">
+				Seen { s.HappenedAt.Format("2 January 2006") } in { place(s.Location) }.
+				{ onRecordText(onRecord) }
+			</p>
+			if photo.Creator != "" {
+				<p class="spotlight__credit">Photo: { photo.Creator }</p>
+			}
+			<a class="button button--ink" href={ templ.SafeURL("#" + Anchor(s)) }>See the record</a>
+		</div>
+	</section>
+}
